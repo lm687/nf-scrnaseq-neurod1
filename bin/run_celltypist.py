@@ -60,6 +60,7 @@ else:
     # Download and download the model
     models.download_models(model=args.model)
     print(f"Downloaded {args.model} at {models.models_path}")
+    model = models.Model.load(model = args.model) ## LM
 
 # prediction
 predictions = celltypist.annotate(

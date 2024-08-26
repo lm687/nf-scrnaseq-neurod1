@@ -28,6 +28,7 @@ process DOUBLETDETECTION {
     else
         """
         export NUMBA_CACHE_DIR=\$PWD
+        echo \$NUMBA_CACHE_DIR
         python ${baseDir}/bin/doublet_detection.py \
             ${cellbender_h5} \
             ${name}_doubletdetection.h5ad \
