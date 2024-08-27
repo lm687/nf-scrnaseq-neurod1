@@ -5,7 +5,7 @@ process CELLBENDER {
     publishDir "${params.outdir}/cellbender/", mode: 'copy'
 
     input:
-    tuple val(name), path(raw_path), val(filtered_path), val(demultiplexing)
+    tuple val(name), path(raw_path), val(filtered_path), val(demultiplexing), val(expected_droplets)
 
     output:
     val "${name}", emit: name
