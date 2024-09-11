@@ -1,6 +1,7 @@
 process REPORT {
     label 'process_medium'
     container "library://mamie_wang/nf-scrnaseq/postprocessing.sif:latest"
+    containerOptions "--bind ${params.mount}"
     publishDir "${params.outdir}/report/", mode: 'copy'
 
     input:
@@ -19,6 +20,4 @@ process REPORT {
     papermill ${baseDir}/bin/QC.ipynb ${name}_report.ipynb -p plots ${params.report.plots}
     jupyter nbconvert --to html ${name}_report.ipynb
     """
-    // papermill ${baseDir}/bin/QC.ipynb ${params.experiment.name}_report.ipynb -p plots ${params.report.plots}
-    // papermill ${baseDir}/bin/QC.ipynb ${params.experiment.name}_report.ipynb -p plots ${params.report.plots} LM
 }

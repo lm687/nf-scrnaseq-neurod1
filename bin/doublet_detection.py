@@ -60,6 +60,8 @@ if args.filtered_h5 != "":
     # Read sample data
     adata_sample_barcodes = []
     for idx, h5_file_path in enumerate(args.filtered_h5, start=1):
+        if not os.path.isfile(h5_file_path):
+            Warning('Filtered path does not exist. Check option "mount" in params file.')
         if h5_file_path.endswith(".h5ad"):
             adata_sample = sc.read_h5ad(h5_file_path)
         else:
