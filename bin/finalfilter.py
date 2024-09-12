@@ -165,7 +165,7 @@ calculate_group_featcount_dist(adata, group_key=args.sample_col)
 # Mark outliers
 designate_outliers(adata, condition=default_filter, group_key=args.sample_col)
 ## 1. Filter them out
-adata = adata[not adata.obs['outlier'],:]
+adata = adata[[not x for x in adata.obs['outlier']],:]
 
 # 2. Filter genes (as before)
 sc.pp.filter_genes(adata, min_cells=1)
