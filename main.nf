@@ -29,8 +29,8 @@ workflow {
         def raw_path = file(row[1])
         def filtered_path = row[2]
         def demultiplexing = row[3].toLowerCase()
-        //def total_droplets_included = row[4]
-        return tuple(name, raw_path, filtered_path, demultiplexing)
+        def total_droplets_included = row[4]
+        return tuple(name, raw_path, filtered_path, demultiplexing, total_droplets_included)
     }
 
     // run Cellbender

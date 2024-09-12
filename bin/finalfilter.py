@@ -164,22 +164,24 @@ calculate_group_featcount_dist(adata, group_key=args.sample_col)
 
 # Mark outliers
 designate_outliers(adata, condition=default_filter, group_key=args.sample_col)
+## 1. Filter them out
+adata = adata[not adata.obs['outlier'],:]
 
-# 1. Filter genes (as before)
+# 2. Filter genes (as before)
 sc.pp.filter_genes(adata, min_cells=1)
 
 
-# 2. Removing features that have to do with tagging: ['Venus', 'fLuc', 'GFP.CDS', 'CellTag.UTR']. Possibly more?
+# 3. Removing features that have to do with tagging: ['Venus', 'fLuc', 'GFP.CDS', 'CellTag.UTR']. Possibly more?
 blacklist_features = ['Venus', 'fLuc', 'GFP.CDS', 'CellTag.UTR']
 adata = adata[:,[x not in ['Venus', 'fLuc', 'GFP.CDS', 'CellTag.UTR'] for x in adata.var.index]]
 
 if not all([not x in adata.var_names for x in blacklist_features]):
     raise 'Incorrect filtering of features'
 
-# 3. Filter out high ambient
+# 4. Filter out high ambient
 adata = adata[adata.obs['background_fraction'] <= 0.15,:]
 
-# 4. Filter out doublets
+# 5. Filter out doublets
 adata = adata[[not x for x in adata.obs['doublet']],:]
 adata = adata[[x != 'Doublet' for x in adata.obs['Classification']],:]
 

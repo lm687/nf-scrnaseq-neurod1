@@ -65,7 +65,11 @@ if args.filtered_h5 != "":
         if h5_file_path.endswith(".h5ad"):
             adata_sample = sc.read_h5ad(h5_file_path)
         else:
-            adata_sample = sc.read_10x_h5(h5_file_path)
+            if os.path.isdir(h5_file_path):
+                Warning('Filtered path is a directory. Reading using <scanpy.read_10x_mtx>')
+                adata_sample = sc.read_10x_mtx(h5_file_path)
+            else:
+                adata_sample = sc.read_10x_h5(h5_file_path)
         adata_sample_barcodes += adata_sample.obs_names.to_list()
 
     adata_sample_barcodes = set(adata_sample_barcodes)
